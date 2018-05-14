@@ -1,6 +1,6 @@
 package org.example.moneytransfer;
 
-import org.example.moneytransfer.persistence.SQLAdapter;
+import org.example.moneytransfer.persistence.adapters.SQLAdapter;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 

@@ -1,5 +1,7 @@
 package org.example.moneytransfer.persistence;
 
+import org.example.moneytransfer.persistence.adapters.SQLAdapter;
+import org.example.moneytransfer.persistence.managers.AccountManager;
 import org.example.moneytransfer.persistence.model.Account;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package org.example.moneytransfer.persistence;
+package org.example.moneytransfer.persistence.adapters;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -22,7 +22,7 @@ public class SQLAdapter {
     private static final String DB_PASSWORD = "";
 
 
-    void update(Map<String, String> values) throws SQLException {
+    public void update(Map<String, String> values) throws SQLException {
         Statement stmt = null;
         try (Connection connection = getDBConnection()) {
             connection.setAutoCommit(false);
@@ -49,7 +49,7 @@ public class SQLAdapter {
         }
     }
 
-    void insert(Map<String, String> values) throws SQLException {
+    public void insert(Map<String, String> values) throws SQLException {
         Statement stmt = null;
         try (Connection connection = getDBConnection()) {
             connection.setAutoCommit(false);

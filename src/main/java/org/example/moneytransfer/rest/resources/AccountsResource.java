@@ -1,7 +1,7 @@
-package org.example.moneytransfer.rest;
+package org.example.moneytransfer.rest.resources;
 
-import org.example.moneytransfer.persistence.AccountManager;
-import org.example.moneytransfer.persistence.SQLAdapter;
+import org.example.moneytransfer.persistence.managers.AccountManager;
+import org.example.moneytransfer.persistence.adapters.SQLAdapter;
 import org.example.moneytransfer.persistence.model.Account;
 
 import javax.inject.Inject;

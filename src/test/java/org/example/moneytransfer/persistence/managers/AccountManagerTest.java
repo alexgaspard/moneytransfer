@@ -1,6 +1,7 @@
-package org.example.moneytransfer.persistence;
+package org.example.moneytransfer.persistence.managers;
 
 import jersey.repackaged.com.google.common.collect.ImmutableMap;
+import org.example.moneytransfer.persistence.adapters.SQLAdapter;
 import org.example.moneytransfer.persistence.model.Account;
 import org.junit.Before;
 import org.junit.Test;

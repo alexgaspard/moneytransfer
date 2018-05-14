@@ -1,7 +1,7 @@
-package org.example.persistence;
+package org.example.moneytransfer.persistence;
 
 import jersey.repackaged.com.google.common.collect.ImmutableMap;
-import org.example.persistence.model.Account;
+import org.example.moneytransfer.persistence.model.Account;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;

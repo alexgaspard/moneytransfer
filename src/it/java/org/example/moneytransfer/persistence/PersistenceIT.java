@@ -1,13 +1,11 @@
-package org.example.persistence;
+package org.example.moneytransfer.persistence;
 
-import org.example.persistence.model.Account;
+import org.example.moneytransfer.persistence.model.Account;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;

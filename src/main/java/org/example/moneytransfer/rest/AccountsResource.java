@@ -1,8 +1,8 @@
-package org.example.rest;
+package org.example.moneytransfer.rest;
 
-import org.example.persistence.AccountManager;
-import org.example.persistence.SQLAdapter;
-import org.example.persistence.model.Account;
+import org.example.moneytransfer.persistence.AccountManager;
+import org.example.moneytransfer.persistence.SQLAdapter;
+import org.example.moneytransfer.persistence.model.Account;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;

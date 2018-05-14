@@ -1,6 +1,6 @@
-package org.example;
+package org.example.moneytransfer;
 
-import org.example.persistence.SQLAdapter;
+import org.example.moneytransfer.persistence.SQLAdapter;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 
@@ -14,6 +14,6 @@ public class AppConfig extends ResourceConfig {
             }
         };
         register(binder);
-        packages("org.example.rest"); //packages
+        packages("org.example.moneytransfer.rest"); //packages
     }
 }

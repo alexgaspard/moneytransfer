@@ -1,4 +1,4 @@
-package org.example;
+package org.example.moneytransfer;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.webapp.WebAppContext;
@@ -24,7 +24,7 @@ public class WebApplication {
 
 //        ServletHolder holder = contextHandler.addServlet(ServletContainer.class, "/api/*");
 //        holder.setInitOrder(1);
-//        holder.setInitParameter("jersey.config.server.provider.packages", "org.example.AppConfig");
+//        holder.setInitParameter("jersey.config.server.provider.packages", "AppConfig");
 ////        holder.setInitParameter("jersey.config.server.provider.packages", "org.example.rest");
         try {
             server.start();

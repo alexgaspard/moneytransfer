@@ -1,4 +1,4 @@
-package org.example.persistence.model;
+package org.example.moneytransfer.persistence.model;
 
 import java.math.BigDecimal;
 

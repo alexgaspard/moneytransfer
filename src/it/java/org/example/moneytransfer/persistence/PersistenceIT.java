@@ -1,35 +1,59 @@
 package org.example.moneytransfer.persistence;
 
-import org.example.moneytransfer.persistence.adapters.SQLAdapter;
-import org.example.moneytransfer.persistence.managers.AccountManager;
-import org.example.moneytransfer.persistence.model.Account;
-import org.junit.Before;
-import org.junit.Test;
+import org.example.moneytransfer.persistence.adapters.SQLJDBCAdapter;
+import org.example.moneytransfer.persistence.exceptions.DatabaseException;
+import org.example.moneytransfer.persistence.exceptions.NoDataModificationException;
+import org.example.moneytransfer.persistence.managers.AccountsDBManager;
+import org.example.moneytransfer.persistence.model.AccountDB;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
-import java.sql.SQLException;
-import java.util.List;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 
-import static org.junit.Assert.assertEquals;
+import static org.example.moneytransfer.persistence.managers.AccountsDBManager.ACCOUNTS_TABLE;
+import static org.example.moneytransfer.persistence.managers.DBManager.ID_FIELD;
+import static org.example.moneytransfer.persistence.managers.TransactionsDBManager.AMOUNT_FIELD;
+import static org.example.moneytransfer.persistence.managers.TransactionsDBManager.DATETIME_FIELD;
+import static org.example.moneytransfer.persistence.managers.TransactionsDBManager.FROM_ACCOUNT_FIELD;
+import static org.example.moneytransfer.persistence.managers.TransactionsDBManager.TO_ACCOUNT_FIELD;
+import static org.example.moneytransfer.persistence.managers.TransactionsDBManager.TRANSACTIONS_TABLE;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class PersistenceIT {
-    private AccountManager manager;
+class PersistenceIT {
+    private AccountsDBManager manager;
 
-    @Before
-    public void setUp() throws Exception {
-        SQLAdapter sqlAdapter = new SQLAdapter();
-        manager = new AccountManager(sqlAdapter);
+    @BeforeEach
+    void setUp() {
+        SQLJDBCAdapter sqlAdapter = new SQLJDBCAdapter();
+        try {
+            Query createAccountsTableQuery = new Query();
+            createAccountsTableQuery.createTable(ACCOUNTS_TABLE, Collections.singletonList(ID_FIELD + " int primary key auto_increment"));
+            Query createTransactionsTableQuery = new Query();
+            createTransactionsTableQuery.createTable(TRANSACTIONS_TABLE,
+                    Arrays.asList(ID_FIELD + " int primary key auto_increment",
+                            AMOUNT_FIELD + " decimal not null",
+                            FROM_ACCOUNT_FIELD + " integer not null",
+                            TO_ACCOUNT_FIELD + " integer not null",
+                            DATETIME_FIELD + " bigint not null",
+                            "foreign key(" + FROM_ACCOUNT_FIELD + ") references " + ACCOUNTS_TABLE + "(" + ID_FIELD + ")",
+                            "foreign key(" + TO_ACCOUNT_FIELD + ") references " + ACCOUNTS_TABLE + "(" + ID_FIELD + ")"));
+            sqlAdapter.write(Arrays.asList(createAccountsTableQuery, createTransactionsTableQuery));
+        } catch (NoDataModificationException e) {
+            // Creating table does not change columns
+        } catch (DatabaseException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        manager = new AccountsDBManager(sqlAdapter);
     }
 
     @Test
-    public void testCreateShouldNotFail() throws SQLException {
-        List<Account> emptyAccounts = manager.getAll();
+    void testCreateShouldNotFail() throws DatabaseException {
+        Collection<AccountDB> emptyAccounts = manager.getAll();
         assertEquals(0, emptyAccounts.size());
-        BigDecimal balance = new BigDecimal((float) 3.14);
-        manager.create(new Account(0, balance));
-        List<Account> accounts = manager.getAll();
+        manager.create(new AccountDB(0));
+        Collection<AccountDB> accounts = manager.getAll();
         assertEquals(1, accounts.size());
-        assertEquals(1, accounts.get(0).getId());
-        assertEquals(balance, accounts.get(0).getBalance());
     }
 }

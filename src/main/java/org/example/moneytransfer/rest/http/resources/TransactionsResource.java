@@ -21,6 +21,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.math.BigDecimal;
 
 import static org.example.moneytransfer.rest.http.resources.AccountsResource.ACCOUNTS_PATH;
 import static org.example.moneytransfer.rest.http.resources.AccountsResource.ID_PATH;
@@ -48,6 +49,9 @@ public class TransactionsResource {
     public Response post(@PathParam(ID) int id, TransactionJSON json) throws HttpException {
         if (json == null) {
             throw new BadRequest("Missing body");
+        }
+        if (json.getAmount() == null || json.getAmount().compareTo(BigDecimal.ZERO) < 0) { // TODO Should use COTS to validate fields
+            throw new BadRequest("Wrong amount");
         }
         try {
             int resourceId = manager.createTransaction(converter.convertToBusiness(json), id);

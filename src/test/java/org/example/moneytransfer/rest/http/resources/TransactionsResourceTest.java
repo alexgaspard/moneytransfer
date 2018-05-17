@@ -115,17 +115,27 @@ class TransactionsResourceTest {
     @Test
     void testPostWhenUnknownErrorShouldThrowException() throws UnknownError {
         when(manager.createTransaction(any(), anyInt())).thenThrow(new UnknownError(""));
-        assertThrows(InternalServerError.class, () -> resource.post(0, new TransactionJSON(0, null, null, 0, null)));
+        assertThrows(InternalServerError.class, () -> resource.post(0, new TransactionJSON(0, new BigDecimal(0), null, 0, null)));
     }
 
     @Test
     void testPostWhenNotExistsShouldThrowException() throws UnknownError {
         when(manager.createTransaction(any(), anyInt())).thenThrow(new NotExists(""));
-        assertThrows(NotFound.class, () -> resource.post(0, new TransactionJSON(0, null, null, 0, null)));
+        assertThrows(NotFound.class, () -> resource.post(0, new TransactionJSON(0, new BigDecimal(0), null, 0, null)));
     }
 
     @Test
     void testPostWhenNullBodyShouldThrowException() {
         assertThrows(BadRequest.class, () -> resource.post(0, null));
+    }
+
+    @Test
+    void testPostWhenNullAmountShouldThrowException() {
+        assertThrows(BadRequest.class, () -> resource.post(0, new TransactionJSON(0, null, null, 0, null)));
+    }
+
+    @Test
+    void testPostWhenNegativeAmountShouldThrowException() {
+        assertThrows(BadRequest.class, () -> resource.post(0, new TransactionJSON(0, new BigDecimal(-1), null, 0, null)));
     }
 }

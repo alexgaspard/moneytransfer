@@ -1,0 +1,172 @@
+swagger: "2.0"
+info:
+  description: "Simple REST API to transfer money between accounts."
+  version: "1.0.0"
+  title: "Money Transfer"
+  license:
+    name: "MIT"
+    url: "https://opensource.org/licenses/mit-license.php"
+basePath: "/api"
+schemes:
+- "http"
+paths:
+  /accounts:
+    post:
+      summary: "Create a new account"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        201:
+          description: "Created"
+    get:
+      summary: "Get accounts"
+      description: ""
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Account"
+        404:
+          description: "Account not found"
+  /accounts/{id}:
+    get:
+      summary: "Get account by its identifier"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Account unique identifier."
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/Account"
+        404:
+          description: "Account not found"
+  /accounts/{id}/transactions:
+    post:
+      summary: "Create a new transaction for this account"
+      description: ""
+      consumes:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Account unique identifier."
+        required: true
+        type: "integer"
+      - in: "body"
+        name: "body"
+        description: "Transaction to create"
+        required: true
+        schema:
+          $ref: "#/definitions/Transaction"
+      responses:
+        201:
+          description: "Created"
+        400:
+          description: "Bad request, e.g. if you exceed the overdraft limit"
+        404:
+          description: "Account not found"
+    get:
+      summary: "Get transactions for this account"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Account unique identifier."
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Transaction"
+        404:
+          description: "Account not found"
+  /accounts/{id}/transactions/{id2}:
+    get:
+      summary: "Get transaction by its identifier"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Account unique identifier."
+        required: true
+        type: "integer"
+      - name: "id2"
+        in: "path"
+        description: "Transaction unique identifier."
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/Transaction"
+        404:
+          description: "Account or transaction not found (transaction must be related to this account)"
+definitions:
+  Account:
+    type: "object"
+    properties:
+      id:
+        description: "Account unique identifier."
+        type: "integer"
+        format: "int64"
+      balance:
+        description: "Account balance."
+        type: "number"
+      transactions:
+        description: "Transactions list related to this account."
+        type: "array"
+        items:
+          $ref: "#/definitions/Transaction"
+    required: 
+     - id
+  Transaction:
+    type: "object"
+    properties:
+      id:
+        description: "Transaction unique identifier."
+        type: "integer"
+        format: "int64"
+      amount:
+        description: "Amount transfered by this transaction."
+        type: "number"
+      type:
+        description: "Transaction type."
+        type: "string"
+        enum:
+        - "DEPOSIT"
+        - "WITHDRAWAL"
+      related:
+        description: "Related account unique identifier."
+        type: "integer"
+        format: "int64"
+      date:
+        description: "Transaction date."
+        type: "string"
+        format: "date-time"
+    required: 
+     - id
+     - amount
+     - type
+     - related

@@ -3,6 +3,13 @@ Money Transfer
 ==============
 Simple REST API to transfer money between accounts.
 
+Run server with:
+```
+mvn exec:java
+```
+Unit tests are available in src/test, integration tests are in it/test and should be executed with a server running on localhost:8080 without any previous data.
+
+
 **Version:** 1.0.0
 
 **License:** [MIT](https://opensource.org/licenses/mit-license.php)

@@ -5,7 +5,7 @@ Simple REST API to transfer money between accounts.
 
 **Version:** 1.0.0
 
-**License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
+**License:** [MIT](https://opensource.org/licenses/mit-license.php)
 
 ### /accounts
 ---

@@ -7,8 +7,16 @@ Run server with:
 ```
 mvn exec:java
 ```
-Unit tests are available in src/test, integration tests are in it/test and should be executed with a server running on localhost:8080 without any previous data.
 
+Unit tests are available in src/test, integration tests are in it/test and should be executed with a server running on localhost:8080 without any previous data.
+To run unit tests:
+```
+mvn test
+```
+To run integration tests on API:
+```
+mvn test -Dtest=RestIT
+```
 
 **Version:** 1.0.0
 

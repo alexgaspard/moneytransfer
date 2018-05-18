@@ -5,7 +5,7 @@ Simple REST API to transfer money between accounts.
 
 Run server with:
 ```
-mvn exec:java
+mvn clean install exec:java
 ```
 
 Unit tests are available in src/test, integration tests are in it/test and should be executed with a server running on localhost:8080 without any previous data.
@@ -17,6 +17,8 @@ To run integration tests on API:
 ```
 mvn test -Dtest=RestIT
 ```
+
+Base URL is http://localhost:8080/api
 
 **Version:** 1.0.0
 

@@ -1,4 +1,4 @@
-[![DepShield Badge](https://depshield.sonatype.org/badges/alexgaspard/moneytransfer/depshield.svg)](https://depshield.github.io)
+[![DepShield Badge](https://depshield.sonatype.org/badges/alexgaspard/moneytransfer/depshield.svg)](https://github.com/alexgaspard/moneytransfer/issues)
 
 Money Transfer
 ==============
